@@ -1,3 +1,4 @@
+---
 name: Dependency Review
 
 on:
@@ -12,10 +13,16 @@ jobs:
     name: Dependency Review
 
     steps:
-      - uses: step-security/harden-runner@v2
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/dependency-review-action@v4
+      - name: Run dependency review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: true

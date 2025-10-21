@@ -1,0 +1,25 @@
+---
+policies:
+  - type: commit
+    spec:
+      header:
+        length: 200
+        imperative: true
+        invalidLastCharacters: .
+      body:
+        required: false
+      dco: false
+      gpg: false
+      spellcheck:
+        locale: null
+      maximumOfOneCommit: false
+      conventional:
+        types:
+          - feat
+          - docs
+          - fix
+          - ci
+          - chore
+          - test
+          - build
+        descriptionLength: 100

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="project-pmd"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>Pragmatisches PMD-Ruleset für Spring/Java – wenig Rauschen, hohe Wirkung.</description>
+
+    <!-- Excludes -->
+    <exclude-pattern>.*/src/test/java/at/hochschule/burgenland/.*</exclude-pattern>
+    <exclude-pattern>.*/target/generated-sources/.*</exclude-pattern>
+    <exclude-pattern>.*/build/generated-sources/.*</exclude-pattern>
+    <exclude-pattern>.*/build/generated/.*</exclude-pattern>
+
+    <!-- Error Prone: echte Bugs -->
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="MissingSerialVersionUID"/> <!-- optional -->
+        <exclude name="AvoidDuplicateLiterals"/>  <!-- optional, sonst viel Noise -->
+    </rule>
+
+    <!-- Best Practices -->
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="GuardLogStatement"/>
+    </rule>
+
+    <!-- Security -->
+    <rule ref="category/java/security.xml"/>
+
+    <!-- Performance -->
+    <rule ref="category/java/performance.xml">
+        <exclude name="AvoidInstantiatingObjectsInLoops"/> <!-- optional, bewusst lockern -->
+    </rule>
+
+    <!-- Design -->
+    <rule ref="category/java/design.xml">
+        <!-- Sinnvoll lassen: Coupling, LawOfDemeter (Teamsache), FinalField, Immutable, etc. -->
+        <!-- Wenn LoD euch nervt: -->
+        <exclude name="LawOfDemeter"/>
+        <exclude name="UseObjectForClearerAPI"/>
+        <exclude name="SignatureDeclareThrowsException"/>
+        <exclude name="LoosePackageCoupling"/>
+        <exclude name="ExcessiveImports"/>
+    </rule>
+
+    <!-- Design: Grenzwerte -->
+    <rule ref="category/java/design.xml/CouplingBetweenObjects">
+        <properties>
+            <property name="threshold" value="25"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="20"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/TooManyFields">
+        <properties>
+            <property name="maxfields" value="25"/>
+        </properties>
+    </rule>
+
+    <!-- Code Style: nur wenig, Rest macht Checkstyle -->
+    <rule ref="category/java/codestyle.xml">
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+        <exclude name="MethodNamingConventions"/>
+        <exclude name="LongVariable"/>   <!-- von Checkstyle/Naming abgedeckt -->
+        <exclude name="ShortVariable"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="ShortClassName"/>
+    </rule>
+</ruleset>
